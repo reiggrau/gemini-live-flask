@@ -3,8 +3,8 @@ console.log('particles.js loaded');
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const BASE_SIZE = 6.0; // Base size of stars
-const TWINKLE_SPEED = 1.0; // Speed of twinkle animation
+const BASE_SIZE = 3.0; // Base size of stars
+const TWINKLE_SPEED = 2.0; // Speed of twinkle animation
 
 const vertexShader = getVertexShader();
 const fragmentShader = getFragmentShader();
@@ -93,6 +93,7 @@ scene.add(stars);
 function animate(time) {
 	controls.update();
 	material.uniforms.uTime.value = time * 0.001; // milliseconds
+	// stars.rotation.y = time * 0.000002; // Slow rotation for a dynamic views
 	renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);

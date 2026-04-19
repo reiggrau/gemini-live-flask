@@ -3,10 +3,6 @@
 	<head>
 		<title>ReigGrau's Gemini Live API Demo</title>
 		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-		<link
-			rel="stylesheet"
-			href="{{ url_for('static', filename='/styles.css') }}"
-		/>
 	</head>
 	<body>
 		<!-- Three.js container -->
@@ -26,5 +22,11 @@
 			type="module"
 			src="{{ url_for('static', filename='js/particles.js') }}"
 		></script>
+		<script
+			type="module"
+			src="{{ url_for('static', filename='js/main.js') }}"
+		></script>
+
+		<button id="start-btn">Start Conversation</button>
 	</body>
 </html>
