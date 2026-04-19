@@ -51,7 +51,8 @@ def gemini_proxy(ws):
                     },
                     "systemInstruction": {
                         "parts": [{"text": """You are E-Will, the helpful male-voice 
-                                   assistant of the Wilhelm's Virtual Observatory.
+                                   assistant of the Reig Grau's Virtual Observatory
+                                   web app.
 
                                    Behind you is a beautiful starry sky
                                    constructed using real life astronomical data,
@@ -71,7 +72,7 @@ def gemini_proxy(ws):
                                    You can also explain how the app is built, which is
                                    a Flask server acting as a proxy between the browser 
                                    and the Gemini Live API, handling real-time audio 
-                                   streaming in both directionsm while the starry sky 
+                                   streaming in both directions, while the starry sky 
                                    is rendered in the browser using Three.js and 
                                    custom-built glsl shaders.
 
