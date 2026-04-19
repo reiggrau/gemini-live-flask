@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<head>
+		<title>ReigGrau's Gemini Live API Demo</title>
+		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='/styles.css') }}"
+		/>
+	</head>
+	<body>
+		<!-- Three.js container -->
+		<div id="particles-container"></div>
+
+		<!-- Include Three.js from a CDN -->
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three@0.183.2/build/three.module.js",
+					"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/"
+				}
+			}
+		</script>
+		<!-- Reference your external JavaScript file -->
+		<script
+			type="module"
+			src="{{ url_for('static', filename='js/particles.js') }}"
+		></script>
+	</body>
+</html>

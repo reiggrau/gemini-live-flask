@@ -1,0 +1,7 @@
+.python-version
+__pycache__/
+.venv/
+.env
+dist/
+build/
+hygdata_v41.csv
