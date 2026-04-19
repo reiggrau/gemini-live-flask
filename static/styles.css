@@ -3,3 +3,217 @@
 	inset: 0;
 	z-index: -1;
 }
+
+/* ── Controls bar: fixed bottom center ── */
+#controls {
+	position: fixed;
+	bottom: 8%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+/* ── Connect / Disconnect button ── */
+#ConnectButton {
+	display: inline-block;
+}
+
+#ConnectButton .btn {
+	position: relative;
+	display: inline-block;
+	padding: 12px 32px;
+	color: #03e9f4;
+	text-decoration: none;
+	text-transform: uppercase;
+	overflow: hidden;
+	transition: 0.5s;
+	letter-spacing: 4px;
+	font-size: 14px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	font-family: inherit;
+}
+
+#ConnectButton .btn:hover {
+	background: #03e9f4;
+	color: #050801;
+	box-shadow:
+		0 0 5px #03e9f4,
+		0 0 25px #03e9f4,
+		0 0 50px #03e9f4,
+		0 0 100px #03e9f4;
+}
+
+/* State: changing (connecting/disconnecting) */
+#ConnectButton .btn.changing {
+	color: #f5a623;
+}
+#ConnectButton .btn.changing:hover {
+	background: #f5a623;
+	color: #050801;
+	box-shadow:
+		0 0 5px #f5a623,
+		0 0 25px #f5a623,
+		0 0 50px #f5a623,
+		0 0 100px #f5a623;
+}
+#ConnectButton .btn.changing .edge:nth-child(1) {
+	background: linear-gradient(90deg, transparent, #f5a623);
+}
+#ConnectButton .btn.changing .edge:nth-child(2) {
+	background: linear-gradient(180deg, transparent, #f5a623);
+}
+#ConnectButton .btn.changing .edge:nth-child(3) {
+	background: linear-gradient(270deg, transparent, #f5a623);
+}
+#ConnectButton .btn.changing .edge:nth-child(4) {
+	background: linear-gradient(360deg, transparent, #f5a623);
+}
+
+/* State: connected */
+#ConnectButton .btn.connected {
+	color: #4ade80;
+}
+#ConnectButton .btn.connected .edge:nth-child(1) {
+	background: linear-gradient(90deg, transparent, #4ade80);
+}
+#ConnectButton .btn.connected .edge:nth-child(2) {
+	background: linear-gradient(180deg, transparent, #4ade80);
+}
+#ConnectButton .btn.connected .edge:nth-child(3) {
+	background: linear-gradient(270deg, transparent, #4ade80);
+}
+#ConnectButton .btn.connected .edge:nth-child(4) {
+	background: linear-gradient(360deg, transparent, #4ade80);
+}
+
+#ConnectButton .btn.connected:hover {
+	color: #050801;
+	background: #f87171;
+	box-shadow:
+		0 0 5px #f87171,
+		0 0 25px #f87171,
+		0 0 50px #f87171,
+		0 0 100px #f87171;
+}
+
+/* Disabled */
+#ConnectButton .btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+#ConnectButton .btn:disabled:hover {
+	background: transparent;
+	color: #03e9f4;
+	box-shadow: none;
+}
+
+/* Animated border edges */
+#ConnectButton .edge {
+	position: absolute;
+	display: block;
+}
+#ConnectButton .edge:nth-child(1) {
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, #03e9f4);
+	animation: edgeTop 1s linear infinite;
+}
+#ConnectButton .edge:nth-child(2) {
+	top: -100%;
+	right: 0;
+	width: 1px;
+	height: 100%;
+	background: linear-gradient(180deg, transparent, #03e9f4);
+	animation: edgeRight 1s linear infinite;
+	animation-delay: 0.25s;
+}
+#ConnectButton .edge:nth-child(3) {
+	bottom: 0;
+	right: -100%;
+	width: 100%;
+	height: 1px;
+	background: linear-gradient(270deg, transparent, #03e9f4);
+	animation: edgeBottom 1s linear infinite;
+	animation-delay: 0.5s;
+}
+#ConnectButton .edge:nth-child(4) {
+	bottom: -100%;
+	left: 0;
+	width: 1px;
+	height: 100%;
+	background: linear-gradient(360deg, transparent, #03e9f4);
+	animation: edgeLeft 1s linear infinite;
+	animation-delay: 0.75s;
+}
+
+@keyframes edgeTop {
+	0% {
+		left: -100%;
+	}
+	50%,
+	100% {
+		left: 100%;
+	}
+}
+@keyframes edgeRight {
+	0% {
+		top: -100%;
+	}
+	50%,
+	100% {
+		top: 100%;
+	}
+}
+@keyframes edgeBottom {
+	0% {
+		right: -100%;
+	}
+	50%,
+	100% {
+		right: 100%;
+	}
+}
+@keyframes edgeLeft {
+	0% {
+		bottom: -100%;
+	}
+	50%,
+	100% {
+		bottom: 100%;
+	}
+}
+
+/* ── Mic / Mute button ── */
+#MicButton {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #4ade80;
+	transition:
+		color 0.3s,
+		opacity 0.3s;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.8;
+}
+#MicButton:hover {
+	opacity: 1;
+}
+#MicButton.muted {
+	color: #f87171;
+	opacity: 0.5;
+}
+#MicButton svg {
+	width: 24px;
+	height: 24px;
+	fill: currentColor;
+}

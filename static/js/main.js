@@ -1,13 +1,31 @@
 import { GeminiClient } from './gemini-client.js';
 import { startMicCapture } from './mic.js';
 
-const startBtn = document.getElementById('start-btn');
+const connectBtn = document.getElementById('connect-btn');
+const connectLabel = connectBtn.querySelector('.label');
+const micBtn = document.getElementById('MicButton');
+const micIconPath = document.getElementById('mic-icon-path');
+
+// SVG paths for mic icons
+const MIC_ON =
+	'M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z';
+const MIC_OFF =
+	'M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.54-.9L19.73 21 21 19.73 4.27 3z';
+
 let client = null;
 let mic = null;
+let isMuted = false;
+let changing = false;
 
-startBtn.addEventListener('click', async () => {
+connectBtn.addEventListener('click', async () => {
+	if (changing) return;
+
 	if (client) {
-		// Stop conversation
+		// Disconnect
+		changing = true;
+		connectBtn.className = 'btn changing';
+		connectLabel.textContent = 'Disconnecting';
+
 		if (mic) {
 			mic.stream.getTracks().forEach((t) => t.stop());
 			mic.processor.disconnect();
@@ -16,13 +34,44 @@ startBtn.addEventListener('click', async () => {
 		}
 		client.disconnect();
 		client = null;
-		startBtn.textContent = 'Start Conversation';
+		isMuted = false;
+
+		micBtn.style.display = 'none';
+		micBtn.classList.remove('muted');
+		connectBtn.className = 'btn';
+		connectLabel.textContent = 'Connect';
+		changing = false;
 		return;
 	}
 
-	startBtn.textContent = 'Connecting...';
+	// Connect
+	changing = true;
+	connectBtn.className = 'btn changing';
+	connectLabel.textContent = 'Connecting';
+
 	client = new GeminiClient();
 	await client.connect();
 	mic = await startMicCapture(client);
-	startBtn.textContent = 'End Conversation';
+
+	connectBtn.className = 'btn connected';
+	connectLabel.textContent = 'Disconnect';
+	micBtn.style.display = 'flex';
+	changing = false;
+});
+
+micBtn.addEventListener('click', () => {
+	if (!mic) return;
+	isMuted = !isMuted;
+
+	if (isMuted) {
+		mic.processor.disconnect();
+		micBtn.classList.add('muted');
+		micBtn.title = 'Unmute microphone';
+		micIconPath.setAttribute('d', MIC_OFF);
+	} else {
+		mic.processor.connect(mic.ctx.destination);
+		micBtn.classList.remove('muted');
+		micBtn.title = 'Mute microphone';
+		micIconPath.setAttribute('d', MIC_ON);
+	}
 });
